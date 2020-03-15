@@ -44,7 +44,7 @@ export class CheckUtils implements CheckUtilsProps {
         return true;
       }
 
-      if (grid[currentX][i] === (0 || getNextPlayer(this.currentPlayer))) {
+      if (grid[currentX][i] !== this.currentPlayer) {
         found = 0;
         return false;
       }
@@ -66,7 +66,7 @@ export class CheckUtils implements CheckUtilsProps {
         return true;
       }
 
-      if (grid[i][currentY] === (0 || getNextPlayer(this.currentPlayer))) {
+      if (grid[i][currentY] !== this.currentPlayer) {
         found = 0;
         return false;
       }
@@ -89,9 +89,9 @@ export class CheckUtils implements CheckUtilsProps {
           return true;
         }
 
-        if (grid[i][nextY] === (0 || getNextPlayer(this.currentPlayer))) {
+        if (grid[i][nextY] !== this.currentPlayer) {
           found = 0;
-          return false;
+          break;
         }
 
         nextY = nextY + 1;
@@ -115,9 +115,9 @@ export class CheckUtils implements CheckUtilsProps {
           return true;
         }
 
-        if (grid[i][nextY] === (0 || getNextPlayer(this.currentPlayer))) {
+        if (grid[i][nextY] !== this.currentPlayer) {
           found = 0;
-          return false;
+          break;
         }
 
         nextY = nextY - 1;
