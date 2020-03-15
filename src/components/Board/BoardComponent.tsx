@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { PlayerToken } from '../PlayerTokenComponent';
 import { GridType } from '../../common/types';
+import { CheckUtils } from '../../utils/gameLogic';
+import { rowAmount, columnAmount, tokenMargin } from '../../consts';
+import { getPlayerColor, getNextPlayer } from '../../utils/utils';
 
 interface BoardProps {
 
@@ -10,16 +13,17 @@ interface BoardProps {
 interface BoardState {
   grid: GridType;
   currentPlayer: 1 | 2;
+  isGameActive: boolean;
 }
 
 const StyledBoard = styled.div`
-  width: 770px;
-  height: 660px;
+  width: ${700 + (columnAmount * tokenMargin * 2)}px;
+  height: ${600 + (rowAmount * tokenMargin * 2)}px;
   background: midnightblue;
-  margin: auto auto;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(${columnAmount}, 1fr);
+  grid-template-rows: repeat(${rowAmount}, 1fr);
   border-radius: 6px;
 `;
 
@@ -28,45 +32,51 @@ export class Board extends React.Component<BoardProps, BoardState> {
     grid: [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 2, 2],
+      [1, 0, 0, 0, 0, 2, 1],
       [1, 2, 1, 0, 1, 2, 1],
       [2, 2, 1, 2, 2, 1, 2],
       [1, 1, 2, 2, 2, 1, 2],
     ],
     currentPlayer: 1,
+    isGameActive: true,
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
-    const { grid, currentPlayer } = this.state;
+    const { grid, currentPlayer, isGameActive } = this.state;
     const el = event.target as HTMLDivElement;
+
+    const utils = new CheckUtils(grid, currentPlayer);
 
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(grid[x][y] !== 0 || grid[x + 1][y] === 0) {
+    if(grid[x][y] !== 0 || grid[x + 1][y] === 0 || !isGameActive) {
       return;
     }
 
     const newGrid = [...grid];
     newGrid[x][y] = currentPlayer;
 
-    this.setState({ grid: newGrid }, () => this.changeCurrentPlayer());
+    this.setState({ grid: newGrid }, () => {
+      if (utils.checkWin()) {
+        this.setState({isGameActive: false});
+      }
+    });
+
+    if(isGameActive) {
+      this.changeCurrentPlayer();
+    }
   }
 
   changeCurrentPlayer = () => {
     const { currentPlayer } = this.state;
+    const nextPlayer = getNextPlayer(currentPlayer);
 
-    if (currentPlayer === 1) {
-      this.setState({ currentPlayer: 2})
-    }
-
-    if (currentPlayer === 2) {
-      this.setState({ currentPlayer: 1})
-    }
+    this.setState({ currentPlayer: nextPlayer});
   }
 
   render() {
-    const { grid } = this.state;
+    const { grid, isGameActive, currentPlayer } = this.state;
 
     return (
       <div>
@@ -85,6 +95,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             })
           })}
         </StyledBoard>
+        {!isGameActive && <h1 style={{color: getPlayerColor(getNextPlayer(currentPlayer))}}>{`Player ${getNextPlayer(currentPlayer)} won!`}</h1>}
       </div>
     )
   }
