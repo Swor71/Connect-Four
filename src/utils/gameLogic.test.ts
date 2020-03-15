@@ -1,4 +1,4 @@
-import { checkForWin } from "./index";
+import { checkForWin } from "./gameLogic";
 import { emptyGrid } from "../consts";
 
 const mockGridVertical = [

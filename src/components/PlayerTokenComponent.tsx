@@ -1,28 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import { getPlayerColor } from "../utils/utils";
+
 
 interface TokenProps {
-  player?: number;
+  player: number;
 }
 
 const StyledToken = styled.div<TokenProps>`
   height: 100px;
   width: 100px;
-  background-color: ${props => {
-    if (props.player === 1) {
-      return "marron";
-    } else if (props.player === 2) {
-      return "yellow";
-    } else {
-      return "ivory";
-    }
-  }};
+  background-color: ${props => getPlayerColor(props.player)};
   border-radius: 50%;
   margin: 5px;
 `;
 
 export class PlayerToken extends React.Component<TokenProps> {
+
+
   render() {
-    return <StyledToken />;
+    const { player } = this.props;
+
+    return <StyledToken player={player}/>;
   }
 }

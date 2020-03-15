@@ -11,8 +11,8 @@ interface State {
 }
 
 const StyledBoard = styled.div`
-  width: 700px;
-  height: 600px;
+  width: 770px;
+  height: 660px;
   background: midnightblue;
   margin: auto auto;
   display: grid;
@@ -27,7 +27,7 @@ export class Board extends React.Component<Props, State> {
     return (
       <div>
         <StyledBoard>
-          <PlayerToken />
+          <PlayerToken player={0}/>
         </StyledBoard>
       </div>
     )
