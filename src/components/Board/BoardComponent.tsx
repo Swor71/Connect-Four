@@ -9,6 +9,7 @@ interface BoardProps {
 
 interface BoardState {
   grid: GridType;
+  currentPlayer: 1 | 2;
 }
 
 const StyledBoard = styled.div`
@@ -32,16 +33,37 @@ export class Board extends React.Component<BoardProps, BoardState> {
       [2, 2, 1, 2, 2, 1, 2],
       [1, 1, 2, 2, 2, 1, 2],
     ],
+    currentPlayer: 1,
   }
 
-  logDetails = (event: any) => {
-    const x = event.target.getAttribute('x');
-    const y = event.target.getAttribute('y');
+  placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
+    const { grid, currentPlayer } = this.state;
+    const el = event.target as HTMLDivElement;
 
-    const newGrid = [...this.state.grid];
-    newGrid[x][y] = 1;
+    const x = Number(el.getAttribute('x'));
+    const y = Number(el.getAttribute('y'));
 
-    this.setState({ grid: newGrid })
+    if(grid[x][y] !== 0) {
+      return;
+    }
+
+    const newGrid = [...grid];
+    newGrid[x][y] = currentPlayer;
+
+    this.setState({ grid: newGrid }, () => this.changeCurrentPlayer());
+  }
+
+  changeCurrentPlayer = () => {
+    const { currentPlayer } = this.state;
+
+    if (currentPlayer === 1) {
+      this.setState({ currentPlayer: 2})
+    }
+
+    if (currentPlayer === 2) {
+      this.setState({ currentPlayer: 1})
+    }
+
   }
 
   render() {
@@ -53,13 +75,14 @@ export class Board extends React.Component<BoardProps, BoardState> {
           {grid.map((xRow, xIdx) => {
             return xRow.map((xColumn, yIdx) => {
               return (
-              <PlayerToken
-                key={`${xIdx} ${yIdx}`}
-                onClick={this.logDetails}
-                x={xIdx}
-                y={yIdx}
-                player={grid[xIdx][yIdx]}
-                />)
+                <PlayerToken
+                  key={`${xIdx} ${yIdx}`}
+                  onClick={this.placeToken}
+                  x={xIdx}
+                  y={yIdx}
+                  player={grid[xIdx][yIdx]}
+                />
+              )
             })
           })}
         </StyledBoard>
