@@ -1,14 +1,17 @@
 import { GridType } from "../common/types";
-import { columnAmount, rowAmount } from "../consts";
+import { columnAmount, rowAmount, winCondition } from "../consts";
 
 export function checkForWin(grid: GridType): boolean {
 
-  for(let x = 0; x < rowAmount; x++) {
+  for(let x = rowAmount - 1; x >= 0; x--) {
     for(let y = 0; y < columnAmount; y++) {
 
-      if(checkHorizontal(grid, x, y)) {
-        return true;
+      if (grid[x][y] === 1) {
+        if(checkHorizontal(grid, x, y)) {
+          return true;
+        }
       }
+
       // if(checkVertical(grid, x, y)) {
       //   return true;
       // }
@@ -24,13 +27,28 @@ export function checkForWin(grid: GridType): boolean {
   return false;
 }
 
-
 export function checkHorizontal(grid: GridType, x: number, y: number): boolean {
+    const nextY = y + 1;
+    let found = 1;
 
+    for(let i = nextY; i < columnAmount; i++) {
+      if (grid[x][i] === 1) {
+        found++
+      }
 
+      if(found === winCondition) {
+        return true;
+      }
 
-  return false;
-}
+      if (grid[x][i] === 0) {
+        found = 0;
+        break;
+      }
+    }
+
+    return false;
+  }
+
 
 // export function checkVertical(grid: GridType, x: number, y: number): boolean {
 
