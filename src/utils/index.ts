@@ -14,23 +14,24 @@ export function checkForWin(grid: GridType): boolean {
         if(checkVertical(grid, x, y)) {
           return true;
         }
+
+        if(checkDiagonalRight(grid, x, y)) {
+          return true;
+        }
       }
-      // if(checkDiagonal(grid, x, y)) {
-      //   return true;
-      // }
     }
   }
 
   return false;
 }
 
-export function checkHorizontal(grid: GridType, x: number, y: number): boolean {
+export function checkHorizontal(grid: GridType, currentX: number, currentY: number): boolean {
 
-  const nextY = y + 1;
+  const nextY = currentY + 1;
   let found = 1;
 
   for(let i = nextY; i < columnAmount; i++) {
-    if (grid[x][i] === 1) {
+    if (grid[currentX][i] === 1) {
       found++
     }
 
@@ -38,7 +39,7 @@ export function checkHorizontal(grid: GridType, x: number, y: number): boolean {
       return true;
     }
 
-    if (grid[x][i] === 0) {
+    if (grid[currentX][i] === 0) {
       found = 0;
       break;
     }
@@ -47,14 +48,13 @@ export function checkHorizontal(grid: GridType, x: number, y: number): boolean {
   return false;
 }
 
+export function checkVertical(grid: GridType, currentX: number, currentY: number): boolean {
 
-export function checkVertical(grid: GridType, x: number, y: number): boolean {
-
-  const nextX = x - 1;
+  const nextX = currentX - 1;
   let found = 1;
 
   for(let i = nextX; i >= 0; i--) {
-    if (grid[i][y] === 1) {
+    if (grid[i][currentY] === 1) {
       found++
     }
 
@@ -62,11 +62,36 @@ export function checkVertical(grid: GridType, x: number, y: number): boolean {
       return true;
     }
 
-    if (grid[i][y] === 0) {
+    if (grid[i][currentY] === 0) {
       found = 0;
       break;
     }
   }
 
   return false;
+}
+
+export function checkDiagonalRight(grid: GridType, currentX: number, currentY: number) {
+  let nextX = currentX - 1;
+  let nextY = currentY + 1;
+  let found = 1;
+
+  for (let i = nextX; i >= 0; i--) {
+    if (i >= 0 && nextY < columnAmount) {
+      if (grid[i][nextY] === 1) {
+        found++
+      }
+
+      if(found === winCondition) {
+        return true;
+      }
+
+      if (grid[i][nextY] === 0) {
+        found = 0;
+        return false;
+      }
+
+      nextY = nextY + 1;
+    }
+  }
 }
