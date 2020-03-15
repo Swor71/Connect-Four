@@ -3,9 +3,9 @@ export function getPlayerColor(playerNumber: number) {
     case 0:
       return 'ivory';
     case 1:
-      return 'red';
+      return 'maroon';
     case 2:
-      return 'yellow';
+      return 'goldenrod';
 
     default:
       break;
