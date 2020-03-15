@@ -21,7 +21,7 @@ export function checkForWin(grid: GridType): boolean {
   return false;
 }
 
-export function checkHorizontal(grid: GridType, currentX: number, currentY: number): boolean {
+function checkHorizontal(grid: GridType, currentX: number, currentY: number): boolean {
 
   const nextY = currentY + 1;
   let found = 1;
@@ -37,14 +37,13 @@ export function checkHorizontal(grid: GridType, currentX: number, currentY: numb
 
     if (grid[currentX][i] === 0) {
       found = 0;
-      break;
+      return false;
     }
   }
-
   return false;
 }
 
-export function checkVertical(grid: GridType, currentX: number, currentY: number): boolean {
+function checkVertical(grid: GridType, currentX: number, currentY: number): boolean {
 
   const nextX = currentX - 1;
   let found = 1;
@@ -60,14 +59,13 @@ export function checkVertical(grid: GridType, currentX: number, currentY: number
 
     if (grid[i][currentY] === 0) {
       found = 0;
-      break;
+      return false;
     }
   }
-
   return false;
 }
 
-export function checkDiagonalRight(grid: GridType, currentX: number, currentY: number) {
+function checkDiagonalRight(grid: GridType, currentX: number, currentY: number): boolean {
   let nextX = currentX - 1;
   let nextY = currentY + 1;
   let found = 1;
@@ -90,9 +88,10 @@ export function checkDiagonalRight(grid: GridType, currentX: number, currentY: n
       nextY = nextY + 1;
     }
   }
+  return false;
 }
 
-function checkDiagonalLeft(grid: GridType, currentX: number, currentY: number) {
+function checkDiagonalLeft(grid: GridType, currentX: number, currentY: number): boolean {
   let nextX = currentX - 1;
   let nextY = currentY - 1;
   let found = 1;
@@ -115,4 +114,5 @@ function checkDiagonalLeft(grid: GridType, currentX: number, currentY: number) {
       nextY = nextY - 1;
     }
   }
+  return false;
 }
