@@ -25,29 +25,41 @@ const StyledBoard = styled.div`
 export class Board extends React.Component<BoardProps, BoardState> {
   state: BoardState = {
     grid: [
-      [1, 2, 1, 1, 2, 1, 1],
-      [1, 2, 2, 2, 2, 2, 1],
-      [1, 2, 1, 2, 2, 2, 2],
-      [1, 2, 1, 1, 1, 2, 1],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 2, 2],
+      [1, 2, 1, 0, 1, 2, 1],
       [2, 2, 1, 2, 2, 1, 2],
       [1, 1, 2, 2, 2, 1, 2],
     ],
   }
 
-  logDetails = (event: Event) => {
+  logDetails = (event: any) => {
+    const x = event.target.getAttribute('x');
+    const y = event.target.getAttribute('y');
 
-    console.log(event.target);
+    const newGrid = [...this.state.grid];
+    newGrid[x][y] = 1;
+
+    this.setState({ grid: newGrid })
   }
 
   render() {
-    const {grid} = this.state;
+    const { grid } = this.state;
 
     return (
       <div>
         <StyledBoard>
           {grid.map((xRow, xIdx) => {
             return xRow.map((xColumn, yIdx) => {
-              return <PlayerToken key={`${xIdx} ${yIdx}`} onClick={this.logDetails} x={xIdx} y={yIdx} player={grid[xIdx][yIdx]}/>
+              return (
+              <PlayerToken
+                key={`${xIdx} ${yIdx}`}
+                onClick={this.logDetails}
+                x={xIdx}
+                y={yIdx}
+                player={grid[xIdx][yIdx]}
+                />)
             })
           })}
         </StyledBoard>
