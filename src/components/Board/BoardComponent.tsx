@@ -58,7 +58,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     newGrid[x][y] = currentPlayer;
 
     this.setState({ grid: newGrid }, () => {
-      if (utils.checkWin()) {
+      if (utils.checkForWin()) {
         this.setState({isGameActive: false});
       }
     });
