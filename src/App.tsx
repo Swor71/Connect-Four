@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Board } from './components/Board/BoardComponent';
+import styled from 'styled-components';
+
+const AppContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: ivory;
+  display: flex;
+  justify-items: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+`
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AppContainer>
+      <h1>Connect Four</h1>
+      <Board />
+    </AppContainer>
+  )
 }
 
 export default App;
