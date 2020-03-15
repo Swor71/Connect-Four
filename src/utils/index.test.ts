@@ -19,14 +19,23 @@ const mockGridHorizontal = [
   [1, 1, 0, 0, 0, 1, 0],
 ];
 
-const mockGridDiagonal = [
+const mockGridDiagonalRight = [
   [1, 0, 1, 1, 0, 1, 1],
   [0, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 0, 1, 0, 0],
   [1, 0, 0, 1, 0, 1, 1],
   [0, 0, 1, 0, 0, 1, 0],
   [1, 1, 0, 0, 0, 1, 0],
-]
+];
+
+const mockGridDiagonalLeft = [
+  [1, 0, 1, 1, 0, 1, 1],
+  [0, 0, 0, 1, 0, 0, 1],
+  [1, 0, 1, 0, 1, 0, 0],
+  [1, 0, 0, 1, 0, 1, 1],
+  [0, 0, 0, 0, 0, 1, 0],
+  [1, 1, 0, 0, 0, 1, 0],
+];
 
 describe('Game logic checks', () => {
   it('checks grid for horizontal win', () => {
@@ -42,7 +51,13 @@ describe('Game logic checks', () => {
   });
 
   it('checks grid for diagonal right win', () => {
-    const result = checkForWin(mockGridDiagonal);
+    const result = checkForWin(mockGridDiagonalRight);
+
+    expect(result).toBe(true);
+  });
+
+  it('checks grid for diagonal left win', () => {
+    const result = checkForWin(mockGridDiagonalLeft);
 
     expect(result).toBe(true);
   });
