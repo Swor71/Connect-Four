@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { getPlayerColor } from "../utils/utils";
-
+import { tokenMargin } from "../consts";
 
 interface TokenProps {
   player: number;
   x: number;
   y: number;
-  onClick(e: any): any;
+  onClick(event: React.MouseEvent<HTMLDivElement>): void;
 }
 
 const StyledToken = styled.div<TokenProps>`
@@ -15,7 +15,7 @@ const StyledToken = styled.div<TokenProps>`
   width: 100px;
   background-color: ${props => getPlayerColor(props.player)};
   border-radius: 50%;
-  margin: 5px;
+  margin: ${tokenMargin}px;
   cursor: pointer;
 `;
 
