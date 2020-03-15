@@ -15,13 +15,9 @@ export function checkForWin(grid: GridType): boolean {
           return true;
         }
       }
-
-
       // if(checkDiagonal(grid, x, y)) {
       //   return true;
       // }
-
-      return false;
     }
   }
 
@@ -61,7 +57,6 @@ export function checkVertical(grid: GridType, x: number, y: number): boolean {
     if (grid[i][y] === 1) {
       found++
     }
-    console.log(`grid[${i}][${y}] = ${grid[i][y]} found = ${found}`);
 
     if(found === winCondition) {
       return true;
