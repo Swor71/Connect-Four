@@ -7,15 +7,6 @@ import { rowAmount, columnAmount, maxMoves } from '../../consts';
 import { getPlayerColor, getNextPlayer, EmptyGrid } from '../../utils/utils';
 import { Button } from '../UI/Button';
 
-// [
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 1],
-//   [1, 0, 0, 0, 0, 2, 1],
-//   [1, 2, 1, 0, 1, 2, 1],
-//   [2, 2, 1, 2, 2, 1, 2],
-//   [1, 1, 2, 2, 2, 1, 2],
-// ],
-
 interface BoardProps {}
 
 interface BoardState {
