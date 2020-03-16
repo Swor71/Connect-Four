@@ -6,6 +6,7 @@ import styled from 'styled-components';
 interface FooterProps {
   currentPlayer: number;
   isGameActive: boolean;
+  movesMade: number;
   resetGame(): void;
   children?: React.ReactNode;
 }
@@ -16,15 +17,21 @@ const StyledHeader = styled.h1<FooterProps>`
 
 export class Footer extends Component<FooterProps> {
   render() {
-    const {isGameActive, currentPlayer, resetGame} = this.props;
+    const {isGameActive, currentPlayer, movesMade, resetGame} = this.props;
 
     return (
       <div>
-        {!isGameActive && <StyledHeader {...this.props}>Player {currentPlayer} won!</StyledHeader>}
-
-        {isGameActive && <StyledHeader {...this.props}>Current Player: {currentPlayer}</StyledHeader>}
-
-        {!isGameActive && <Button onClick={resetGame}>RESET</Button>}
+        {isGameActive ? (
+          <div>
+            <StyledHeader {...this.props}>Current Player: {currentPlayer}</StyledHeader>
+            <h2>Moves: {movesMade}</h2>
+          </div>
+        ) : (
+          <div>
+            <StyledHeader {...this.props}>Player {currentPlayer} wins!</StyledHeader>
+            <Button onClick={resetGame}>RESET</Button>
+          </div>
+        )}
       </div>
     )
   }

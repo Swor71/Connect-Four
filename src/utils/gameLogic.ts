@@ -16,10 +16,10 @@ export class CheckUtils implements CheckUtilsProps {
 
         if (this.grid[x][y] === this.currentPlayer) {
           if(
-            this.checkHorizontal(this.grid, x, y) ||
-            this.checkVertical(this.grid, x, y) ||
-            this.checkDiagonalRight(this.grid, x, y) ||
-            this.checkDiagonalLeft(this.grid, x, y)
+            this.checkHorizontal(x, y) ||
+            this.checkVertical(x, y) ||
+            this.checkDiagonalRight(x, y) ||
+            this.checkDiagonalLeft(x, y)
           ) {
             return true;
           }
@@ -29,13 +29,13 @@ export class CheckUtils implements CheckUtilsProps {
     return false;
   }
 
-  private checkHorizontal(grid: GridType, currentX: number, currentY: number): boolean {
+  private checkHorizontal(currentX: number, currentY: number): boolean {
 
     const nextY = currentY + 1;
     let found = 1;
 
     for(let i = nextY; i < COLUMN_AMOUNT; i++) {
-      if (grid[currentX][i] === this.currentPlayer) {
+      if (this.grid[currentX][i] === this.currentPlayer) {
         found++
       } else {
         return false;
@@ -48,13 +48,13 @@ export class CheckUtils implements CheckUtilsProps {
     return false;
   }
 
-  private checkVertical(grid: GridType, currentX: number, currentY: number): boolean {
+  private checkVertical(currentX: number, currentY: number): boolean {
 
     const nextX = currentX - 1;
     let found = 1;
 
     for(let i = nextX; i >= 0; i--) {
-      if (grid[i][currentY] === this.currentPlayer) {
+      if (this.grid[i][currentY] === this.currentPlayer) {
         found++
       } else {
         return false;
@@ -67,14 +67,14 @@ export class CheckUtils implements CheckUtilsProps {
     return false;
   }
 
-  private checkDiagonalRight(grid: GridType, currentX: number, currentY: number): boolean {
+  private checkDiagonalRight(currentX: number, currentY: number): boolean {
     let nextX = currentX - 1;
     let nextY = currentY + 1;
     let found = 1;
 
     for (let i = nextX; i >= 0; i--) {
       if (i >= 0 && nextY < COLUMN_AMOUNT) {
-        if (grid[i][nextY] === this.currentPlayer) {
+        if (this.grid[i][nextY] === this.currentPlayer) {
           found++
         } else {
           return false;
@@ -90,14 +90,14 @@ export class CheckUtils implements CheckUtilsProps {
     return false;
   }
 
-  private checkDiagonalLeft(grid: GridType, currentX: number, currentY: number): boolean {
+  private checkDiagonalLeft(currentX: number, currentY: number): boolean {
     let nextX = currentX - 1;
     let nextY = currentY - 1;
     let found = 1;
 
     for (let i = nextX; i >= 0; i--) {
       if (i >= 0 && nextY >= 0) {
-        if (grid[i][nextY] === this.currentPlayer) {
+        if (this.grid[i][nextY] === this.currentPlayer) {
           found++
         } else {
           return false;

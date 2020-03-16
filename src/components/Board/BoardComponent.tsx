@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PlayerToken, tokenMargin } from '../PlayerToken/PlayerTokenComponent';
+import { PlayerToken, TOKEN_MARGIN } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { ROW_AMOUNT, COLUMN_AMOUNT, MAX_MOVES } from '../../consts';
@@ -17,8 +17,8 @@ interface BoardState {
 }
 
 const StyledBoard = styled.div`
-  width: ${700 + (COLUMN_AMOUNT * tokenMargin * 2)}px;
-  height: ${600 + (ROW_AMOUNT * tokenMargin * 2)}px;
+  width: ${700 + (COLUMN_AMOUNT * TOKEN_MARGIN * 2)}px;
+  height: ${600 + (ROW_AMOUNT * TOKEN_MARGIN * 2)}px;
   background: midnightblue;
   margin: 0 auto;
   display: grid;
@@ -83,7 +83,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
   }
 
   render() {
-    const { grid, isGameActive, currentPlayer } = this.state;
+    const { grid, isGameActive, currentPlayer, movesMade } = this.state;
 
     return (
       <div>
@@ -106,6 +106,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
           isGameActive={isGameActive}
           currentPlayer={currentPlayer}
           resetGame={this.resetGame}
+          movesMade={movesMade}
         />
       </div>
     )

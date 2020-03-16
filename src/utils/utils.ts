@@ -1,7 +1,6 @@
 import { PLAYER_COLOR } from "../consts";
 import { GridType } from "../common/types";
 
-
 export function getPlayerColor(currentPlayer: number) {
   switch (currentPlayer) {
     case 1:

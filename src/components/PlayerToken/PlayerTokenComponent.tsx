@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { getPlayerColor } from "../../utils/utils";
 
-export const tokenMargin = 5;
+export const TOKEN_MARGIN = 5;
 
 interface TokenProps {
   player: number;
@@ -16,7 +16,7 @@ const StyledToken = styled.div<TokenProps>`
   width: 100px;
   background-color: ${props => getPlayerColor(props.player)};
   border-radius: 50%;
-  margin: ${tokenMargin}px;
+  margin: ${TOKEN_MARGIN}px;
   cursor: pointer;
 `;
 
