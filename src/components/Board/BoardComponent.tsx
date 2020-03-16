@@ -44,16 +44,21 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
     const { grid, currentPlayer, isGameActive } = this.state;
-    const el = event.target as HTMLDivElement;
 
-    const utils = new CheckUtils(grid, currentPlayer);
+    const el = event.target as HTMLDivElement;
 
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(grid[x][y] !== 0 || grid[x + 1][y] === 0 || !isGameActive) {
-      return;
-    }
+    if(
+      grid[x][y] !== 0 // can select only empty tokens
+      || x === rowAmount - 1 ? false : (grid[x + 1][y] === 0) // no floating token and check for bottom row
+      || !isGameActive // is game active
+      ) {
+        return;
+      }
+
+    const utils = new CheckUtils(grid, currentPlayer);
 
     const newGrid = [...grid];
     newGrid[x][y] = currentPlayer;
