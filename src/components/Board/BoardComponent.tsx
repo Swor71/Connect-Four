@@ -32,7 +32,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     grid: new EmptyGrid().grid,
     currentPlayer: 1,
     isGameActive: true,
-    movesMade: 0,
+    movesMade: 40,
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -43,15 +43,17 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(x === ROW_AMOUNT - 1 ? false : (grid[x + 1][y] === 0) || !isGameActive) {
+    if(x === ROW_AMOUNT - 1 ? false : (grid[x + 1][y] === 0)) {
       return;
     }
 
-    if(grid[x][y] === 0) {
+    if(isGameActive && grid[x][y] === 0) {
       const utils = new CheckUtils(grid, currentPlayer);
 
       const newGrid = [...grid];
       newGrid[x][y] = currentPlayer;
+
+      // TODO check for draw -> movesMade vs MAX_MOVES
 
       this.setState(prevState => (
         { grid: newGrid,
