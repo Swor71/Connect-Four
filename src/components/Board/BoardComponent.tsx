@@ -31,14 +31,7 @@ const StyledBoard = styled.div`
 
 export class Board extends React.Component<BoardProps, BoardState> {
   state: BoardState = {
-    grid: [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 2, 1],
-        [1, 2, 1, 0, 1, 2, 1],
-        [2, 2, 1, 2, 2, 1, 2],
-        [1, 1, 2, 2, 2, 1, 2],
-      ],
+    grid: emptyGrid,
     currentPlayer: 1,
     isGameActive: true,
     movesMade: 0,
@@ -52,25 +45,27 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if( !isGameActive || grid[x][y] !== 0 || x === rowAmount - 1 ? false : (grid[x + 1][y] === 0)) {
-        return;
-      }
+    if( x === rowAmount - 1 ? false : (grid[x + 1][y] === 0) || !isGameActive ) {
+      return;
+    }
 
-    const utils = new CheckUtils(grid, currentPlayer);
+    if(grid[x][y] === 0) {
+      const utils = new CheckUtils(grid, currentPlayer);
 
-    const newGrid = [...grid];
-    newGrid[x][y] = currentPlayer;
+      const newGrid = [...grid];
+      newGrid[x][y] = currentPlayer;
 
-    this.setState(prevState => (
-      { grid: newGrid,
-        movesMade: prevState.movesMade + 1
-     }), () => {
-      if (utils.checkForWin() || movesMade === maxMoves) {
-        this.setState({ isGameActive: false });
-      } else {
-        this.changeCurrentPlayer();
-      }
-    });
+      this.setState(prevState => (
+        { grid: newGrid,
+          movesMade: prevState.movesMade + 1
+      }), () => {
+        if (utils.checkForWin() || movesMade === maxMoves) {
+          this.setState({ isGameActive: false });
+        } else {
+          this.changeCurrentPlayer();
+        }
+      });
+    }
   }
 
   changeCurrentPlayer = () => {
