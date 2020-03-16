@@ -1,5 +1,5 @@
 import { CheckUtils } from "./gameLogic";
-import { emptyGrid } from "../consts";
+import { EMPTY_GRID } from "../consts";
 
 const mockGridVertical = [
   [1, 0, 1, 1, 0, 2, 1],
@@ -70,7 +70,7 @@ describe('Game logic', () => {
     });
 
     it('returns false for empty grid', () => {
-      const utils = new CheckUtils(emptyGrid, 1);
+      const utils = new CheckUtils(EMPTY_GRID, 1);
       const result = utils.checkForWin();
 
       expect(result).toBe(false);
@@ -107,7 +107,7 @@ describe('Game logic', () => {
     });
 
     it('returns false for empty grid', () => {
-      const utils = new CheckUtils(emptyGrid, 2);
+      const utils = new CheckUtils(EMPTY_GRID, 2);
       const result = utils.checkForWin();
 
       expect(result).toBe(false);

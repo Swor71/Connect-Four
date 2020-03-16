@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PlayerToken, tokenMargin } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
-import { rowAmount, columnAmount, maxMoves } from '../../consts';
+import { ROW_AMOUNT, COLUMN_AMOUNT, MAX_MOVES } from '../../consts';
 import { getNextPlayer, EmptyGrid } from '../../utils/utils';
 import { Footer } from '../UI/Footer';
 
@@ -17,13 +17,13 @@ interface BoardState {
 }
 
 const StyledBoard = styled.div`
-  width: ${700 + (columnAmount * tokenMargin * 2)}px;
-  height: ${600 + (rowAmount * tokenMargin * 2)}px;
+  width: ${700 + (COLUMN_AMOUNT * tokenMargin * 2)}px;
+  height: ${600 + (ROW_AMOUNT * tokenMargin * 2)}px;
   background: midnightblue;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(${columnAmount}, 1fr);
-  grid-template-rows: repeat(${rowAmount}, 1fr);
+  grid-template-columns: repeat(${COLUMN_AMOUNT}, 1fr);
+  grid-template-rows: repeat(${ROW_AMOUNT}, 1fr);
   border-radius: 6px;
 `;
 
@@ -43,7 +43,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(x === rowAmount - 1 ? false : (grid[x + 1][y] === 0) || !isGameActive) {
+    if(x === ROW_AMOUNT - 1 ? false : (grid[x + 1][y] === 0) || !isGameActive) {
       return;
     }
 
@@ -57,7 +57,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
         { grid: newGrid,
           movesMade: prevState.movesMade + 1
       }), () => {
-        if (movesMade >= 6 ? utils.checkForWin() : false || movesMade === maxMoves) {
+        if (movesMade >= 6 ? utils.checkForWin() : false || movesMade === MAX_MOVES) {
           this.setState({ isGameActive: false });
         } else {
           this.changeCurrentPlayer();

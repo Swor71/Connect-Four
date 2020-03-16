@@ -1,16 +1,16 @@
-import { playerColor } from "../consts";
+import { PLAYER_COLOR } from "../consts";
 import { GridType } from "../common/types";
 
 
 export function getPlayerColor(currentPlayer: number) {
   switch (currentPlayer) {
     case 1:
-      return playerColor.PLAYER_ONE;
+      return PLAYER_COLOR.PLAYER_ONE;
     case 2:
-      return playerColor.PLAYER_TWO;
+      return PLAYER_COLOR.PLAYER_TWO;
 
     default:
-      return playerColor.DEFAULT;
+      return PLAYER_COLOR.DEFAULT;
   }
 };
 

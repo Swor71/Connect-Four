@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { playerColor } from '../../consts';
+import { PLAYER_COLOR } from '../../consts';
 
 interface ButtonProps {
   onClick(): void;
@@ -15,7 +15,7 @@ const StyledButton = styled.button`
   color: darkblue;
   font-size: 1.1rem;
   cursor: pointer;
-  background-color: ${playerColor.DEFAULT};
+  background-color: ${PLAYER_COLOR.DEFAULT};
 `;
 
 export class Button extends React.PureComponent<ButtonProps> {
