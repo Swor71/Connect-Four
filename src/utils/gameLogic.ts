@@ -1,7 +1,5 @@
 import { GridType } from "../common/types";
 import { columnAmount, rowAmount, winCondition } from "../consts";
-import { getNextPlayer } from "./utils";
-
 
 interface CheckUtilsProps {
   grid: GridType;
@@ -38,15 +36,12 @@ export class CheckUtils implements CheckUtilsProps {
     for(let i = nextY; i < columnAmount; i++) {
       if (grid[currentX][i] === this.currentPlayer) {
         found++
+      } else {
+        return false;
       }
 
       if(found === winCondition) {
         return true;
-      }
-
-      if (grid[currentX][i] !== this.currentPlayer) {
-        found = 0;
-        return false;
       }
     }
     return false;
@@ -60,15 +55,12 @@ export class CheckUtils implements CheckUtilsProps {
     for(let i = nextX; i >= 0; i--) {
       if (grid[i][currentY] === this.currentPlayer) {
         found++
+      } else {
+        return false;
       }
 
       if(found === winCondition) {
         return true;
-      }
-
-      if (grid[i][currentY] !== this.currentPlayer) {
-        found = 0;
-        return false;
       }
     }
     return false;
@@ -83,15 +75,12 @@ export class CheckUtils implements CheckUtilsProps {
       if (i >= 0 && nextY < columnAmount) {
         if (grid[i][nextY] === this.currentPlayer) {
           found++
+        } else {
+          return false;
         }
 
         if(found === winCondition) {
           return true;
-        }
-
-        if (grid[i][nextY] !== this.currentPlayer) {
-          found = 0;
-          break;
         }
 
         nextY = nextY + 1;
@@ -109,15 +98,12 @@ export class CheckUtils implements CheckUtilsProps {
       if (i >= 0 && nextY >= 0) {
         if (grid[i][nextY] === this.currentPlayer) {
           found++
+        } else {
+          return false;
         }
 
         if(found === winCondition) {
           return true;
-        }
-
-        if (grid[i][nextY] !== this.currentPlayer) {
-          found = 0;
-          break;
         }
 
         nextY = nextY - 1;
