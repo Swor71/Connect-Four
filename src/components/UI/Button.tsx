@@ -4,6 +4,7 @@ import { playerColor } from '../../consts';
 
 interface Props {
   onClick(): void;
+  children: React.ReactNode;
 }
 interface State {
 
@@ -21,7 +22,10 @@ const StyledButton = styled.button`
 `;
 
 export class Button extends Component<Props, State> {
+
   render() {
-    return <StyledButton {...this.props}/>
+    const {children, ...rest} = this.props;
+
+    return <StyledButton {...rest}>{children}</StyledButton>
   }
 }
