@@ -1,12 +1,14 @@
+import { playerColor } from "../consts";
+
 export function getPlayerColor(currentPlayer: number) {
   switch (currentPlayer) {
     case 1:
-      return 'maroon';
+      return playerColor.PLAYER_ONE;
     case 2:
-      return 'goldenrod';
+      return playerColor.PLAYER_TWO;
 
     default:
-      return 'ivory';
+      return playerColor.DEFAULT;
   }
 };
 

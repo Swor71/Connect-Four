@@ -4,6 +4,7 @@ import { columnAmount, rowAmount, winCondition } from "../consts";
 interface CheckUtilsProps {
   grid: GridType;
   currentPlayer: number;
+  checkForWin(): boolean;
 }
 
 export class CheckUtils implements CheckUtilsProps {

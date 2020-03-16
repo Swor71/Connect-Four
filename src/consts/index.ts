@@ -14,3 +14,9 @@ export const emptyGrid: GridType = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
 ];
+
+export const playerColor = {
+  PLAYER_ONE: 'maroon',
+  PLAYER_TWO: 'goldenrod',
+  DEFAULT: 'ivory',
+};
