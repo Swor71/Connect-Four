@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PlayerToken, tokenMargin } from '../PlayerTokenComponent';
+import { PlayerToken, tokenMargin } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { rowAmount, columnAmount, emptyGrid, maxMoves } from '../../consts';
@@ -31,7 +31,14 @@ const StyledBoard = styled.div`
 
 export class Board extends React.Component<BoardProps, BoardState> {
   state: BoardState = {
-    grid: emptyGrid,
+    grid: [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 2, 1],
+      [1, 2, 1, 0, 1, 2, 1],
+      [2, 2, 1, 2, 2, 1, 2],
+      [1, 1, 2, 2, 2, 1, 2],
+    ],
     currentPlayer: 1,
     isGameActive: true,
     movesMade: 0,

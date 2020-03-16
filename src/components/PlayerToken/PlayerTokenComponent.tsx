@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { getPlayerColor } from "../utils/utils";
+import { getPlayerColor } from "../../utils/utils";
 
 export const tokenMargin = 5;
 
