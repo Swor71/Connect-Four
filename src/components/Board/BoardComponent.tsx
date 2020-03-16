@@ -57,7 +57,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
         { grid: newGrid,
           movesMade: prevState.movesMade + 1
       }), () => {
-        if (utils.checkForWin() || movesMade === maxMoves) {
+        if (movesMade >= 6 ? utils.checkForWin() : false || movesMade === maxMoves) {
           this.setState({ isGameActive: false });
         } else {
           this.changeCurrentPlayer();
