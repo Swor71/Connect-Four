@@ -3,24 +3,18 @@ import { getPlayerColor } from '../../utils/utils';
 import { Button } from './Button';
 import styled from 'styled-components';
 
-interface Props {
+interface FooterProps {
   currentPlayer: number;
   isGameActive: boolean;
   resetGame(): void;
   children?: React.ReactNode;
 }
 
-interface State {
-
-}
-
-const StyledHeader = styled.h1<Props>`
+const StyledHeader = styled.h1<FooterProps>`
   color: ${({currentPlayer}) => getPlayerColor(currentPlayer)}
 `
 
-export class Footer extends Component<Props, State> {
-  state = {}
-
+export class Footer extends Component<FooterProps> {
   render() {
     const {isGameActive, currentPlayer, resetGame} = this.props;
 
