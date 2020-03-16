@@ -4,8 +4,8 @@ import { PlayerToken, tokenMargin } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { rowAmount, columnAmount, maxMoves } from '../../consts';
-import { getPlayerColor, getNextPlayer, EmptyGrid } from '../../utils/utils';
-import { Button } from '../UI/Button';
+import { getNextPlayer, EmptyGrid } from '../../utils/utils';
+import { Footer } from '../UI/Footer';
 
 interface BoardProps {}
 
@@ -102,8 +102,11 @@ export class Board extends React.Component<BoardProps, BoardState> {
             })
           })}
         </StyledBoard>
-        {!isGameActive && <h1 style={{color: getPlayerColor(currentPlayer)}}>{`Player ${currentPlayer} won!`}</h1>}
-        {!isGameActive && <Button onClick={this.resetGame}>RESET</Button>}
+        <Footer
+          isGameActive={isGameActive}
+          currentPlayer={currentPlayer}
+          resetGame={this.resetGame}
+        />
       </div>
     )
   }
