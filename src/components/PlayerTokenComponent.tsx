@@ -20,7 +20,7 @@ const StyledToken = styled.div<TokenProps>`
   cursor: pointer;
 `;
 
-export class PlayerToken extends React.Component<TokenProps> {
+export class PlayerToken extends React.PureComponent<TokenProps> {
   render() {
     return <StyledToken {...this.props} />;
   }

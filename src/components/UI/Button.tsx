@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { playerColor } from '../../consts';
 
-interface Props {
+interface ButtonProps {
   onClick(): void;
   children: React.ReactNode;
 }
-interface State {
 
-}
+interface ButtonState {}
 
 const StyledButton = styled.button`
   width: 120px;
@@ -21,8 +20,7 @@ const StyledButton = styled.button`
   background-color: ${playerColor.DEFAULT};
 `;
 
-export class Button extends Component<Props, State> {
-
+export class Button extends React.PureComponent<ButtonProps, ButtonState> {
   render() {
     const {children, ...rest} = this.props;
 

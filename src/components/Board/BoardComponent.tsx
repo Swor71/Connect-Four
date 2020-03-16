@@ -45,7 +45,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if( x === rowAmount - 1 ? false : (grid[x + 1][y] === 0) || !isGameActive ) {
+    if(x === rowAmount - 1 ? false : (grid[x + 1][y] === 0) || !isGameActive) {
       return;
     }
 
