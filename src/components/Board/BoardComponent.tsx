@@ -3,13 +3,20 @@ import styled from 'styled-components';
 import { PlayerToken, tokenMargin } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
-import { rowAmount, columnAmount, emptyGrid, maxMoves } from '../../consts';
+import { rowAmount, columnAmount, maxMoves } from '../../consts';
 import { getPlayerColor, getNextPlayer } from '../../utils/utils';
 import { Button } from '../UI/Button';
 
-interface BoardProps {
+// [
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 1],
+//   [1, 0, 0, 0, 0, 2, 1],
+//   [1, 2, 1, 0, 1, 2, 1],
+//   [2, 2, 1, 2, 2, 1, 2],
+//   [1, 1, 2, 2, 2, 1, 2],
+// ],
 
-}
+interface BoardProps {}
 
 interface BoardState {
   grid: GridType;
@@ -29,19 +36,31 @@ const StyledBoard = styled.div`
   border-radius: 6px;
 `;
 
+// grid: [
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0]
+// ],
+
 export class Board extends React.Component<BoardProps, BoardState> {
-  state: BoardState = {
-    grid: [
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 2, 1],
-      [1, 2, 1, 0, 1, 2, 1],
-      [2, 2, 1, 2, 2, 1, 2],
-      [1, 1, 2, 2, 2, 1, 2],
-    ],
-    currentPlayer: 1,
-    isGameActive: true,
-    movesMade: 0,
+  constructor(props: BoardProps) {
+    super(props);
+    this.state = {
+      grid: [
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0]
+        ],
+      currentPlayer: 1,
+      isGameActive: true,
+      movesMade: 0,
+    }
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -83,11 +102,9 @@ export class Board extends React.Component<BoardProps, BoardState> {
   }
 
   resetGame = () => {
-    this.setState({
-      isGameActive: true,
-      grid: emptyGrid,
-      movesMade: 0,
-    });
+    const cleanState = new Board({}).state;
+
+    this.setState({ ...cleanState });
   }
 
   render() {
@@ -110,7 +127,8 @@ export class Board extends React.Component<BoardProps, BoardState> {
             })
           })}
         </StyledBoard>
-        {!isGameActive && <h1 style={{color: getPlayerColor(currentPlayer)}}>{`Player ${currentPlayer} won!`} <Button onClick={this.resetGame}>RESET</Button></h1>}
+        {!isGameActive && <h1 style={{color: getPlayerColor(currentPlayer)}}>{`Player ${currentPlayer} won!`}</h1>}
+        {!isGameActive && <Button onClick={this.resetGame}>RESET</Button>}
       </div>
     )
   }

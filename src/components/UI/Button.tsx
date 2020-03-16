@@ -7,8 +7,6 @@ interface ButtonProps {
   children: React.ReactNode;
 }
 
-interface ButtonState {}
-
 const StyledButton = styled.button`
   width: 120px;
   height: 30px;
@@ -20,7 +18,7 @@ const StyledButton = styled.button`
   background-color: ${playerColor.DEFAULT};
 `;
 
-export class Button extends React.PureComponent<ButtonProps, ButtonState> {
+export class Button extends React.PureComponent<ButtonProps> {
   render() {
     const {children, ...rest} = this.props;
 
