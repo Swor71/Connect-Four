@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { getPlayerColor } from "../utils/utils";
-import { tokenMargin } from "../consts";
+
+export const tokenMargin = 5;
 
 interface TokenProps {
   player: number;

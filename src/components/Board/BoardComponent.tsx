@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PlayerToken } from '../PlayerTokenComponent';
+import { PlayerToken, tokenMargin } from '../PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
-import { rowAmount, columnAmount, tokenMargin } from '../../consts';
+import { rowAmount, columnAmount, emptyGrid } from '../../consts';
 import { getPlayerColor, getNextPlayer } from '../../utils/utils';
+import { Button } from '../UI/Button';
 
 interface BoardProps {
 
@@ -60,12 +61,10 @@ export class Board extends React.Component<BoardProps, BoardState> {
     this.setState({ grid: newGrid }, () => {
       if (utils.checkForWin()) {
         this.setState({isGameActive: false});
+      } else {
+        this.changeCurrentPlayer();
       }
     });
-
-    if(isGameActive) {
-      this.changeCurrentPlayer();
-    }
   }
 
   changeCurrentPlayer = () => {
@@ -73,6 +72,17 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const nextPlayer = getNextPlayer(currentPlayer);
 
     this.setState({ currentPlayer: nextPlayer});
+  }
+
+  resetGame = () => {
+    const { isGameActive } = this.state;
+
+    if(!isGameActive) {
+      this.setState({
+        isGameActive: true,
+        grid: emptyGrid,
+      })
+    }
   }
 
   render() {
@@ -95,7 +105,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             })
           })}
         </StyledBoard>
-        {!isGameActive && <h1 style={{color: getPlayerColor(getNextPlayer(currentPlayer))}}>{`Player ${getNextPlayer(currentPlayer)} won!`}</h1>}
+        {!isGameActive && <h1 style={{color: getPlayerColor(currentPlayer)}}>{`Player ${currentPlayer} won!`} <Button onClick={this.resetGame}>RESET</Button></h1>}
       </div>
     )
   }
