@@ -4,7 +4,7 @@ import { PlayerToken, tokenMargin } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { rowAmount, columnAmount, maxMoves } from '../../consts';
-import { getPlayerColor, getNextPlayer } from '../../utils/utils';
+import { getPlayerColor, getNextPlayer, EmptyGrid } from '../../utils/utils';
 import { Button } from '../UI/Button';
 
 // [
@@ -36,31 +36,12 @@ const StyledBoard = styled.div`
   border-radius: 6px;
 `;
 
-// grid: [
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0]
-// ],
-
 export class Board extends React.Component<BoardProps, BoardState> {
-  constructor(props: BoardProps) {
-    super(props);
-    this.state = {
-      grid: [
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0]
-        ],
-      currentPlayer: 1,
-      isGameActive: true,
-      movesMade: 0,
-    }
+  state: BoardState = {
+    grid: new EmptyGrid().grid,
+    currentPlayer: 1,
+    isGameActive: true,
+    movesMade: 0,
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -102,9 +83,12 @@ export class Board extends React.Component<BoardProps, BoardState> {
   }
 
   resetGame = () => {
-    const cleanState = new Board({}).state;
-
-    this.setState({ ...cleanState });
+    this.setState({
+      grid: new EmptyGrid().grid,
+      isGameActive: true,
+      movesMade: 0,
+      currentPlayer: 1,
+    })
   }
 
   render() {
