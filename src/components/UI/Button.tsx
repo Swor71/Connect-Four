@@ -17,6 +17,11 @@ const StyledButton = styled.button`
   font-weight: bold;
   cursor: pointer;
   background-color: ${PLAYER_COLOR.DEFAULT};
+  transition: all 0.3s;
+  &:hover {
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    transform: translateY(-1px);
+  }
 `;
 
 export class Button extends React.PureComponent<ButtonProps> {
