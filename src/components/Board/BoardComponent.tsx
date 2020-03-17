@@ -5,7 +5,7 @@ import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { ROW_AMOUNT, COLUMN_AMOUNT } from '../../consts';
 import { getNextPlayer, getEmptyGrid } from '../../utils/utils';
-import { Footer } from '../UI/Footer';
+import { BoardControl } from '../Board/BoardControl';
 
 interface BoardProps {}
 
@@ -15,6 +15,12 @@ interface BoardState {
   isGameActive: boolean;
   movesMade: number;
 }
+
+const BoardWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  text-align: center;
+`;
 
 const StyledBoard = styled.div`
   width: ${700 + (COLUMN_AMOUNT * TOKEN_MARGIN * 2)}px;
@@ -86,32 +92,34 @@ export class Board extends React.Component<BoardProps, BoardState> {
   }
 
   render() {
-    const { grid, isGameActive, currentPlayer, movesMade } = this.state;
+    const { grid, isGameActive, currentPlayer } = this.state;
 
     return (
-      <div>
-        <StyledBoard>
-          {grid.map((xRow, xIndex) => {
-            return xRow.map((xColumn, yIndex) => {
-              return (
-                <PlayerToken
-                  key={`${xIndex} ${yIndex}`}
-                  onClick={this.placeToken}
-                  x={xIndex}
-                  y={yIndex}
-                  player={grid[xIndex][yIndex]}
-                />
-              )
-            })
-          })}
-        </StyledBoard>
-        <Footer
+      <BoardWrapper>
+        <div>
+          <h1>Connect Four</h1>
+          <StyledBoard>
+            {grid.map((xRow, xIndex) => {
+              return xRow.map((xColumn, yIndex) => {
+                return (
+                  <PlayerToken
+                    key={`${xIndex} ${yIndex}`}
+                    onClick={this.placeToken}
+                    x={xIndex}
+                    y={yIndex}
+                    player={grid[xIndex][yIndex]}
+                  />
+                )
+              })
+            })}
+          </StyledBoard>
+        </div>
+        <BoardControl
           isGameActive={isGameActive}
           currentPlayer={currentPlayer}
           resetGame={this.resetGame}
-          movesMade={movesMade}
         />
-      </div>
+      </BoardWrapper>
     )
   }
 }

@@ -8,12 +8,13 @@ interface ButtonProps {
 }
 
 const StyledButton = styled.button`
-  width: 120px;
-  height: 30px;
+  width: 100%;
+  height: 50px;
   border: 2px solid darkblue;
   border-radius: 4px;
   color: darkblue;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   cursor: pointer;
   background-color: ${PLAYER_COLOR.DEFAULT};
 `;

@@ -1,5 +1,5 @@
 import { GridType } from "../common/types";
-import { COLUMN_AMOUNT, ROW_AMOUNT, WIN_CONDITION } from "../consts";
+import { COLUMN_AMOUNT, ROW_AMOUNT, TOKENS_NEEDED_FOR_WIN } from "../consts";
 
 interface CheckUtilsProps {
   grid: GridType;
@@ -41,7 +41,7 @@ export class CheckUtils implements CheckUtilsProps {
         return false;
       }
 
-      if(found === WIN_CONDITION) {
+      if(found === TOKENS_NEEDED_FOR_WIN) {
         return true;
       }
     }
@@ -60,7 +60,7 @@ export class CheckUtils implements CheckUtilsProps {
         return false;
       }
 
-      if(found === WIN_CONDITION) {
+      if(found === TOKENS_NEEDED_FOR_WIN) {
         return true;
       }
     }
@@ -80,7 +80,7 @@ export class CheckUtils implements CheckUtilsProps {
           return false;
         }
 
-        if(found === WIN_CONDITION) {
+        if(found === TOKENS_NEEDED_FOR_WIN) {
           return true;
         }
 
@@ -103,7 +103,7 @@ export class CheckUtils implements CheckUtilsProps {
           return false;
         }
 
-        if(found === WIN_CONDITION) {
+        if(found === TOKENS_NEEDED_FOR_WIN) {
           return true;
         }
 
