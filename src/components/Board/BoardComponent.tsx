@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { PlayerToken, TOKEN_MARGIN } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
-import { ROW_AMOUNT, COLUMN_AMOUNT, MAX_MOVES } from '../../consts';
-import { getNextPlayer, getEmptyArr } from '../../utils/utils';
+import { ROW_AMOUNT, COLUMN_AMOUNT } from '../../consts';
+import { getNextPlayer, getEmptyGrid } from '../../utils/utils';
 import { Footer } from '../UI/Footer';
 
 interface BoardProps {}
@@ -29,21 +29,21 @@ const StyledBoard = styled.div`
 
 export class Board extends React.Component<BoardProps, BoardState> {
   state: BoardState = {
-    grid: getEmptyArr(),
+    grid: getEmptyGrid(),
     currentPlayer: 1,
     isGameActive: true,
     movesMade: 0,
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
-    const { grid, currentPlayer, isGameActive, movesMade } = this.state;
+    const { grid, currentPlayer, isGameActive } = this.state;
 
     const el = event.target as HTMLDivElement;
 
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(x === ROW_AMOUNT - 1 ? false : (grid[x + 1][y] === 0)) {
+    if(x !== ROW_AMOUNT - 1 && grid[x + 1][y] === 0) {
       return;
     }
 
@@ -55,29 +55,30 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
       // TODO check for draw -> movesMade vs MAX_MOVES
 
-      this.setState(prevState => (
-        { grid: newGrid,
-          movesMade: prevState.movesMade + 1
-      }), () => {
-        if (movesMade >= 6 ? utils.checkForWin() : false || movesMade === MAX_MOVES) {
-          this.setState({ isGameActive: false });
-        } else {
-          this.changeCurrentPlayer();
-        }
-      });
+      this.setState(prevState => ({
+        grid: newGrid,
+        movesMade: prevState.movesMade + 1,
+        isGameActive: !utils.checkForWin(),
+        }),() => {
+            this.changeCurrentPlayer();
+          }
+        )
     }
   }
 
   changeCurrentPlayer = () => {
-    const { currentPlayer } = this.state;
-    const nextPlayer = getNextPlayer(currentPlayer);
+    const { currentPlayer, isGameActive } = this.state;
 
-    this.setState({ currentPlayer: nextPlayer});
+    if(isGameActive) {
+      const nextPlayer = getNextPlayer(currentPlayer);
+
+      this.setState({ currentPlayer: nextPlayer});
+    }
   }
 
   resetGame = () => {
     this.setState({
-      grid: getEmptyArr(),
+      grid: getEmptyGrid(),
       isGameActive: true,
       movesMade: 0,
       currentPlayer: 1,
@@ -90,15 +91,15 @@ export class Board extends React.Component<BoardProps, BoardState> {
     return (
       <div>
         <StyledBoard>
-          {grid.map((xRow, xIdx) => {
-            return xRow.map((xColumn, yIdx) => {
+          {grid.map((xRow, xIndex) => {
+            return xRow.map((xColumn, yIndex) => {
               return (
                 <PlayerToken
-                  key={`${xIdx} ${yIdx}`}
+                  key={`${xIndex} ${yIndex}`}
                   onClick={this.placeToken}
-                  x={xIdx}
-                  y={yIdx}
-                  player={grid[xIdx][yIdx]}
+                  x={xIndex}
+                  y={yIndex}
+                  player={grid[xIndex][yIndex]}
                 />
               )
             })

@@ -16,4 +16,4 @@ export const getPlayerColor = (currentPlayer: number) => {
 
 export const getNextPlayer = (currentPlayer: number) => currentPlayer === 1 ? 2 : 1;
 
-export const getEmptyArr = (): GridType => cloneDeep(EMPTY_GRID);
+export const getEmptyGrid = (): GridType => cloneDeep(EMPTY_GRID);
