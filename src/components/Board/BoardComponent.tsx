@@ -4,7 +4,7 @@ import { PlayerToken, TOKEN_MARGIN } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { ROW_AMOUNT, COLUMN_AMOUNT, MAX_MOVES } from '../../consts';
-import { getNextPlayer, EmptyGrid } from '../../utils/utils';
+import { getNextPlayer, getEmptyArr } from '../../utils/utils';
 import { Footer } from '../UI/Footer';
 
 interface BoardProps {}
@@ -29,10 +29,10 @@ const StyledBoard = styled.div`
 
 export class Board extends React.Component<BoardProps, BoardState> {
   state: BoardState = {
-    grid: new EmptyGrid().grid,
+    grid: getEmptyArr(),
     currentPlayer: 1,
     isGameActive: true,
-    movesMade: 40,
+    movesMade: 0,
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -77,7 +77,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
   resetGame = () => {
     this.setState({
-      grid: new EmptyGrid().grid,
+      grid: getEmptyArr(),
       isGameActive: true,
       movesMade: 0,
       currentPlayer: 1,
