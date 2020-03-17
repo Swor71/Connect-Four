@@ -12,7 +12,7 @@ interface BoardControlProps {
 }
 
 const BoardControlWrapper = styled.div`
-  width: 250px;
+  width: 260px;
   height: 660px;
   margin-left: 50px;
   display: flex;
@@ -31,14 +31,11 @@ export class BoardControl extends Component<BoardControlProps> {
 
     return (
       <BoardControlWrapper>
-        {isGameActive ? (
-            <StyledHeader {...this.props}>Current Player: {currentPlayer}</StyledHeader>
-        ) : (
-          <>
-            <StyledHeader {...this.props}>Player {currentPlayer} wins!</StyledHeader>
-            <Button onClick={resetGame}>RESET</Button>
-          </>
-        )}
+        {isGameActive
+          ? <StyledHeader {...this.props}>Current Player: {currentPlayer}</StyledHeader>
+          : <StyledHeader {...this.props}>Player {currentPlayer} wins!</StyledHeader>
+        }
+        <Button onClick={resetGame}>RESET</Button>
         <Rules />
       </BoardControlWrapper>
     )

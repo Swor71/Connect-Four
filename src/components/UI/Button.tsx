@@ -19,7 +19,7 @@ const StyledButton = styled.button`
   background-color: ${PLAYER_COLOR.DEFAULT};
   transition: all 0.3s;
   &:hover {
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
     transform: translateY(-1px);
   }
 `;
