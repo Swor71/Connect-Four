@@ -2,7 +2,7 @@ import { PLAYER_COLOR, EMPTY_GRID } from "../consts";
 import { GridType } from "../common/types";
 import cloneDeep from 'lodash/cloneDeep'
 
-export function getPlayerColor(currentPlayer: number) {
+export const getPlayerColor = (currentPlayer: number) => {
   switch (currentPlayer) {
     case 1:
       return PLAYER_COLOR.PLAYER_ONE;
@@ -14,10 +14,6 @@ export function getPlayerColor(currentPlayer: number) {
   }
 };
 
-export function getNextPlayer(currentPlayer: number) {
-  return currentPlayer === 1 ? 2 : 1;
-};
+export const getNextPlayer = (currentPlayer: number) => currentPlayer === 1 ? 2 : 1;
 
-export function getEmptyArr(): GridType {
-  return cloneDeep(EMPTY_GRID);
-}
+export const getEmptyArr = (): GridType => cloneDeep(EMPTY_GRID);

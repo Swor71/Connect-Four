@@ -13,7 +13,7 @@ interface FooterProps {
 
 const StyledHeader = styled.h1<FooterProps>`
   color: ${({currentPlayer}) => getPlayerColor(currentPlayer)}
-`
+`;
 
 export class Footer extends Component<FooterProps> {
   render() {
