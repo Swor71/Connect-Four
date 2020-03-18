@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { getPlayerColor } from '../../utils/utils';
 import { Button } from '../UI/Button';
 import styled from 'styled-components';
 import { Rules } from '../UI/Rules';
+import { store } from '../../store/store';
+import { observer } from 'mobx-react';
 
-interface BoardControlProps {
+interface StyledHeaderProps {
   currentPlayer: number;
-  isGameActive: boolean;
-  resetGame(): void;
-  children?: React.ReactNode;
 }
 
 const BoardControlWrapper = styled.div`
@@ -21,21 +20,22 @@ const BoardControlWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledHeader = styled.h1<BoardControlProps>`
+const StyledHeader = styled.h1<StyledHeaderProps>`
   color: ${({currentPlayer}) => getPlayerColor(currentPlayer)};
 `;
 
-export class BoardControl extends Component<BoardControlProps> {
+@observer
+export class BoardControl extends React.PureComponent {
   render() {
-    const {isGameActive, currentPlayer, resetGame} = this.props;
+    const { isGameActive, currentPlayer } = store;
 
     return (
       <BoardControlWrapper>
         {isGameActive
-          ? <StyledHeader {...this.props}>Current Player: {currentPlayer}</StyledHeader>
-          : <StyledHeader {...this.props}>Player {currentPlayer} wins!</StyledHeader>
+          ? <StyledHeader currentPlayer={currentPlayer} >Current Player: {currentPlayer}</StyledHeader>
+          : <StyledHeader currentPlayer={currentPlayer} >Player {currentPlayer} wins!</StyledHeader>
         }
-        <Button onClick={resetGame}>RESET</Button>
+        <Button>RESET</Button>
         <Rules />
       </BoardControlWrapper>
     )
