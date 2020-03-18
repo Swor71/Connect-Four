@@ -1,12 +1,14 @@
 import React from 'react';
-import { Board } from './components/Board/BoardComponent';
 import styled from 'styled-components';
+import { Board } from './components/Board/BoardComponent';
+import { BoardControl } from './components/Board/BoardControl';
 
 const AppContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ivory;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   * {
@@ -14,10 +16,19 @@ const AppContainer = styled.div`
   }
 `;
 
-function App() {
+const BoardWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  text-align: center;
+`;
+
+const App = () => {
   return (
     <AppContainer>
-      <Board />
+      <BoardWrapper>
+        <Board />
+        <BoardControl />
+      </BoardWrapper>
     </AppContainer>
   )
 }

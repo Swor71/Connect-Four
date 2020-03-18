@@ -16,7 +16,7 @@ const BoardControlWrapper = styled.div`
   margin-left: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -31,6 +31,7 @@ export class BoardControl extends React.PureComponent {
 
     return (
       <BoardControlWrapper>
+        <h1>Connect Four</h1>
         {isGameActive
           ? <StyledHeader currentPlayer={currentPlayer} >Current Player: {currentPlayer}</StyledHeader>
           : <StyledHeader currentPlayer={currentPlayer} >Player {currentPlayer} wins!</StyledHeader>
