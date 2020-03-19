@@ -8,7 +8,6 @@ const AppContainer = styled.div`
   height: 100vh;
   background-color: ivory;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   * {
