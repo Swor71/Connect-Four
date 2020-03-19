@@ -4,8 +4,8 @@ import { PlayerToken, TOKEN_MARGIN } from '../PlayerToken/PlayerTokenComponent';
 import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { ROW_AMOUNT, COLUMN_AMOUNT } from '../../consts';
-import { getNextPlayer, getEmptyGrid } from '../../utils/utils';
-import { BoardControl } from '../Board/BoardControl';
+import { observer } from 'mobx-react';
+import { store } from '../../store/store';
 
 interface BoardProps {}
 
@@ -15,12 +15,6 @@ interface BoardState {
   isGameActive: boolean;
   movesMade: number;
 }
-
-const BoardWrapper = styled.div`
-  display: flex;
-  align-items: flex-end;
-  text-align: center;
-`;
 
 const StyledBoard = styled.div`
   width: ${700 + (COLUMN_AMOUNT * TOKEN_MARGIN * 2)}px;
@@ -32,17 +26,11 @@ const StyledBoard = styled.div`
   grid-template-rows: repeat(${ROW_AMOUNT}, 1fr);
   border-radius: 6px;
 `;
-
+@observer
 export class Board extends React.Component<BoardProps, BoardState> {
-  state: BoardState = {
-    grid: getEmptyGrid(),
-    currentPlayer: 1,
-    isGameActive: true,
-    movesMade: 0,
-  }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
-    const { grid, currentPlayer, isGameActive } = this.state;
+    const { grid, currentPlayer, isGameActive } = store;
 
     const el = event.target as HTMLDivElement;
 
@@ -56,70 +44,37 @@ export class Board extends React.Component<BoardProps, BoardState> {
     if(isGameActive && grid[x][y] === 0) {
       const utils = new CheckUtils(grid, currentPlayer);
 
-      const newGrid = [...grid];
-      newGrid[x][y] = currentPlayer;
+      store.setPlayerToken(x, y);
 
-      // TODO check for draw -> movesMade vs MAX_MOVES
+      const isGameActive = !utils.checkForWin();
 
-      this.setState(prevState => ({
-        grid: newGrid,
-        movesMade: prevState.movesMade + 1,
-        isGameActive: !utils.checkForWin(),
-        }),() => {
-            this.changeCurrentPlayer();
-          }
-        )
+      if(!isGameActive) {
+        store.isGameActive = isGameActive;
+      } else {
+        store.changeCurrentPlayer();
+      }
     }
-  }
-
-  changeCurrentPlayer = () => {
-    const { currentPlayer, isGameActive } = this.state;
-
-    if(isGameActive) {
-      const nextPlayer = getNextPlayer(currentPlayer);
-
-      this.setState({ currentPlayer: nextPlayer});
-    }
-  }
-
-  resetGame = () => {
-    this.setState({
-      grid: getEmptyGrid(),
-      isGameActive: true,
-      movesMade: 0,
-      currentPlayer: 1,
-    })
   }
 
   render() {
-    const { grid, isGameActive, currentPlayer } = this.state;
+    const { grid } = store;
 
     return (
-      <BoardWrapper>
-        <div>
-          <h1>Connect Four</h1>
-          <StyledBoard>
-            {grid.map((xRow, xIndex) => {
-              return xRow.map((xColumn, yIndex) => {
-                return (
-                  <PlayerToken
-                    key={`${xIndex} ${yIndex}`}
-                    onClick={this.placeToken}
-                    x={xIndex}
-                    y={yIndex}
-                    player={grid[xIndex][yIndex]}
-                  />
-                )
-              })
-            })}
-          </StyledBoard>
-        </div>
-        <BoardControl
-          isGameActive={isGameActive}
-          currentPlayer={currentPlayer}
-          resetGame={this.resetGame}
-        />
-      </BoardWrapper>
+      <StyledBoard>
+        {grid.map((xRow, xIndex) => {
+          return xRow.map((xColumn, yIndex) => {
+            return (
+              <PlayerToken
+                key={`${xIndex} ${yIndex}`}
+                onClick={this.placeToken}
+                x={xIndex}
+                y={yIndex}
+                player={grid[xIndex][yIndex]}
+              />
+            )
+          })
+        })}
+      </StyledBoard>
     )
   }
 }

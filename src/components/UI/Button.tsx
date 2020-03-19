@@ -27,10 +27,8 @@ const StyledButton = styled.button`
 @observer
 export class Button extends React.PureComponent<ButtonProps> {
   render() {
-    const { resetGame } = store;
-
     return (
-      <StyledButton onClick={resetGame}>{this.props.children}</StyledButton>
+      <StyledButton onClick={store.resetGame}>{this.props.children}</StyledButton>
     )
   }
 }
