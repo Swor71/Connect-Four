@@ -24,6 +24,14 @@ export class AppStore {
   @action changeCurrentPlayer = () => {
     this.currentPlayer = getNextPlayer(this.currentPlayer);
   }
+
+  @action setGameActiveState = (isGameActive: boolean) => {
+    this.isGameActive = isGameActive;
+
+    if(isGameActive) {
+      this.changeCurrentPlayer();
+    }
+  }
 }
 
 export const store = new AppStore();

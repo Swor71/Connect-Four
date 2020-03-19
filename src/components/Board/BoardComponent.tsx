@@ -42,17 +42,12 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     if(isGameActive && grid[x][y] === 0) {
-      const utils = new CheckUtils(grid, currentPlayer);
-
       store.setPlayerToken(x, y);
 
+      const utils = new CheckUtils(grid, currentPlayer);
       const isGameActive = !utils.checkForWin();
 
-      if(!isGameActive) {
-        store.isGameActive = isGameActive;
-      } else {
-        store.changeCurrentPlayer();
-      }
+      store.setGameActiveState(isGameActive);
     }
   }
 
