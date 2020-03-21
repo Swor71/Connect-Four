@@ -21,16 +21,16 @@ export class AppStore {
     this.grid[x][y] = this.currentPlayer;
   }
 
-  @action changeCurrentPlayer = () => {
-    this.currentPlayer = getNextPlayer(this.currentPlayer);
-  }
-
   @action setGameActiveState = (isGameActive: boolean) => {
     this.isGameActive = isGameActive;
 
     if(isGameActive) {
       this.changeCurrentPlayer();
     }
+  }
+
+  changeCurrentPlayer() {
+    this.currentPlayer = getNextPlayer(this.currentPlayer);
   }
 }
 
