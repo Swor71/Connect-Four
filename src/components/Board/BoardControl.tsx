@@ -8,6 +8,7 @@ interface BoardControlProps {
   currentPlayer: number;
   isGameActive: boolean;
   resetGame(): void;
+  undoMove(): void;
   children?: React.ReactNode;
 }
 
@@ -27,7 +28,7 @@ const StyledHeader = styled.h1<BoardControlProps>`
 
 export class BoardControl extends Component<BoardControlProps> {
   render() {
-    const {isGameActive, currentPlayer, resetGame} = this.props;
+    const {isGameActive, currentPlayer, resetGame, undoMove} = this.props;
 
     return (
       <BoardControlWrapper>
@@ -36,6 +37,7 @@ export class BoardControl extends Component<BoardControlProps> {
           : <StyledHeader {...this.props}>Player {currentPlayer} wins!</StyledHeader>
         }
         <Button onClick={resetGame}>RESET</Button>
+        <Button onClick={undoMove}>UNDO A MOVE</Button>
         <Rules />
       </BoardControlWrapper>
     )

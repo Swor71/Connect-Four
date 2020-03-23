@@ -6,6 +6,7 @@ import { CheckUtils } from '../../utils/gameLogic';
 import { ROW_AMOUNT, COLUMN_AMOUNT } from '../../consts';
 import { getNextPlayer, getEmptyGrid } from '../../utils/utils';
 import { BoardControl } from '../Board/BoardControl';
+import cloneDeep from 'lodash/cloneDeep';
 
 interface BoardProps {}
 
@@ -14,6 +15,8 @@ interface BoardState {
   currentPlayer: 1 | 2;
   isGameActive: boolean;
   movesMade: number;
+  lastMove: GridType;
+  previousPlayer: 1 | 2;
 }
 
 const BoardWrapper = styled.div`
@@ -39,6 +42,8 @@ export class Board extends React.Component<BoardProps, BoardState> {
     currentPlayer: 1,
     isGameActive: true,
     movesMade: 0,
+    lastMove: getEmptyGrid(),
+    previousPlayer: 1,
   }
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -49,22 +54,31 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(x !== ROW_AMOUNT - 1 && grid[x + 1][y] === 0) {
+    if(x !== ROW_AMOUNT - 1 && grid[x + 1][y] && x !== 0) {
       return;
     }
 
     if(isGameActive && grid[x][y] === 0) {
-      const utils = new CheckUtils(grid, currentPlayer);
+      const newGrid = cloneDeep(grid);
+      let firstEmptySpace = 0;
 
-      const newGrid = [...grid];
-      newGrid[x][y] = currentPlayer;
+      for(let i = ROW_AMOUNT - 1; i > 0; i--) {
+        if(grid[i][y] === 0) {
+          firstEmptySpace = i;
+          break;
+        }
+      }
 
-      // TODO check for draw -> movesMade vs MAX_MOVES
+      newGrid[firstEmptySpace][y] = currentPlayer;
+
+      const utils = new CheckUtils(newGrid, currentPlayer);
 
       this.setState(prevState => ({
         grid: newGrid,
         movesMade: prevState.movesMade + 1,
         isGameActive: !utils.checkForWin(),
+        lastMove: grid,
+        previousPlayer: currentPlayer,
         }),() => {
             this.changeCurrentPlayer();
           }
@@ -80,6 +94,13 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
       this.setState({ currentPlayer: nextPlayer});
     }
+  }
+
+  undoMove = () => {
+    this.setState(prevState => ({
+      grid: prevState.lastMove,
+      currentPlayer: prevState.previousPlayer,
+    }));
   }
 
   resetGame = () => {
@@ -118,6 +139,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
           isGameActive={isGameActive}
           currentPlayer={currentPlayer}
           resetGame={this.resetGame}
+          undoMove={this.undoMove}
         />
       </BoardWrapper>
     )
