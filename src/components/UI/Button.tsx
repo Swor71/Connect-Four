@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
 import { PLAYER_COLOR } from '../../consts';
-import { observer } from 'mobx-react';
 import { store } from '../../store/store';
 
 interface ButtonProps {
@@ -24,11 +23,12 @@ const StyledButton = styled.button`
     transform: translateY(-1px);
   }
 `;
-@observer
 export class Button extends React.PureComponent<ButtonProps> {
   render() {
+    const { resetGame } = store;
+
     return (
-      <StyledButton onClick={store.resetGame}>{this.props.children}</StyledButton>
+      <StyledButton onClick={resetGame}>{this.props.children}</StyledButton>
     )
   }
 }

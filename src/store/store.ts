@@ -1,10 +1,11 @@
 import { observable, action } from 'mobx';
-import { GridType } from '../common/types';
+import { GridType, Player } from '../common/types';
 import { getEmptyGrid, getNextPlayer } from '../utils/utils';
+import cloneDeep from 'lodash/cloneDeep';
 
 export class AppStore {
   @observable grid: GridType = getEmptyGrid();
-  @observable currentPlayer: number = 1;
+  @observable currentPlayer: Player = 1;
   @observable isGameActive: boolean = true;
   @observable movesMade: number = 0;
   @observable isTie: boolean = false;
@@ -17,8 +18,8 @@ export class AppStore {
     this.isTie = false;
   }
 
-  @action setPlayerToken = (x: number, y: number) => {
-    this.grid[x][y] = this.currentPlayer;
+  @action setPlayerToken = (grid: GridType) => {
+    this.grid = cloneDeep(grid);
   }
 
   @action setGameActiveState = (isGameActive: boolean) => {

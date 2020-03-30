@@ -1,20 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PlayerToken, TOKEN_MARGIN } from '../PlayerToken/PlayerTokenComponent';
-import { GridType } from '../../common/types';
 import { CheckUtils } from '../../utils/gameLogic';
 import { ROW_AMOUNT, COLUMN_AMOUNT } from '../../consts';
 import { observer } from 'mobx-react';
 import { store } from '../../store/store';
+import { cloneDeep } from 'lodash';
 
-interface BoardProps {}
-
-interface BoardState {
-  grid: GridType;
-  currentPlayer: 1 | 2;
-  isGameActive: boolean;
-  movesMade: number;
-}
 
 const StyledBoard = styled.div`
   width: ${700 + (COLUMN_AMOUNT * TOKEN_MARGIN * 2)}px;
@@ -27,7 +19,7 @@ const StyledBoard = styled.div`
   border-radius: 6px;
 `;
 @observer
-export class Board extends React.Component<BoardProps, BoardState> {
+export class Board extends React.Component {
 
   placeToken = (event: React.MouseEvent<HTMLDivElement>) => {
     const { grid, currentPlayer, isGameActive } = store;
@@ -37,14 +29,26 @@ export class Board extends React.Component<BoardProps, BoardState> {
     const x = Number(el.getAttribute('x'));
     const y = Number(el.getAttribute('y'));
 
-    if(x !== ROW_AMOUNT - 1 && grid[x + 1][y] === 0) {
+    if(x !== ROW_AMOUNT - 1 && grid[x + 1][y] && x !== 0) {
       return;
     }
 
     if(isGameActive && grid[x][y] === 0) {
-      store.setPlayerToken(x, y);
+      const newGrid = cloneDeep(grid);
+      let firstEmptySpace = 0;
 
-      const utils = new CheckUtils(grid, currentPlayer);
+      for(let i = ROW_AMOUNT - 1; i > 0; i--) {
+        if(newGrid[i][y] === 0) {
+          firstEmptySpace = i;
+          break;
+        }
+      }
+
+      newGrid[firstEmptySpace][y] = currentPlayer;
+
+      store.setPlayerToken(newGrid);
+
+      const utils = new CheckUtils(newGrid, currentPlayer);
       const isGameActive = !utils.checkForWin();
 
       store.setGameActiveState(isGameActive);
