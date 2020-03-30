@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
-import { PLAYER_COLOR } from '../../consts';
-import { store } from '../../store/store';
+import { PLAYER_COLOR } from '../../../consts';
+import { store } from '../../../store/store';
 
 interface ButtonProps {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { getPlayerColor } from '../../utils/utils';
-import { Button } from '../UI/Button';
+import { Button } from '../UI/Button/Button';
 import styled from 'styled-components';
 import { Rules } from '../UI/Rules';
 import { store } from '../../store/store';
