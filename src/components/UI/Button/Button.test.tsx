@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { Button } from './Button';
 
-afterAll(cleanup);
+afterEach(cleanup);
 
 describe('ButtonComponent', () => {
   // it('renders the button', () => {
