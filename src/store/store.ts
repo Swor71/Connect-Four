@@ -4,11 +4,19 @@ import { getEmptyGrid, getNextPlayer } from '../utils/utils';
 import cloneDeep from 'lodash/cloneDeep';
 
 export class AppStore {
-  @observable grid: GridType = getEmptyGrid();
-  @observable currentPlayer: Player = 1;
-  @observable isGameActive: boolean = true;
-  @observable movesMade: number = 0;
-  @observable isTie: boolean = false;
+  @observable grid: GridType;
+  @observable currentPlayer: Player;
+  @observable isGameActive: boolean;
+  @observable movesMade: number;
+  @observable isTie: boolean;
+
+  constructor(){
+    this.grid = getEmptyGrid();
+    this.currentPlayer = 1;
+    this.isGameActive = true;
+    this.movesMade = 0;
+    this.isTie = false;
+  }
 
   @action resetGame = () => {
     this.grid = getEmptyGrid();
