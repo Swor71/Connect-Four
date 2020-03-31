@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PLAYER_COLOR } from '../../../consts';
 import { store } from '../../../store/store';
 
-interface ButtonProps {
+export interface ButtonProps {
   children: React.ReactNode;
 }
 
