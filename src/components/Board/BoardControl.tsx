@@ -32,10 +32,11 @@ export class BoardControl extends React.PureComponent {
     return (
       <BoardControlWrapper>
         <h1>Connect Four</h1>
-        {isGameActive
-          ? <StyledHeader currentPlayer={currentPlayer} >Current Player: {currentPlayer}</StyledHeader>
-          : <StyledHeader currentPlayer={currentPlayer} >Player {currentPlayer} wins!</StyledHeader>
-        }
+          <StyledHeader currentPlayer={currentPlayer}>{
+          isGameActive
+            ? `Player ${currentPlayer} wins!`
+            : `Current Player: ${currentPlayer}`
+          }</StyledHeader>
         <Button>RESET</Button>
         <Rules />
       </BoardControlWrapper>
